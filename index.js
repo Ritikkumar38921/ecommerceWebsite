@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(urlencoded({extended:true}));
 if(process.env.NODE_ENV == "production"){
     app.use(express.static(__dirname + "/public/images"));
-    app.use(express.static(path.join(__dirname,"/client/build")));
+    
 }
 
 mongoose.connect(process.env.MONGO_URL)
@@ -42,7 +42,7 @@ app.use("/api/carts",cartRoute);
 app.use("/api/orders",orderRoute);
 app.use("/api/checkout",stripeRoute);
 
-
+app.use(express.static(path.join(__dirname,"/client/build")));
 app.use("*",(req,res) => {
     // console.log(req.url);
     // console.log("rajat");
