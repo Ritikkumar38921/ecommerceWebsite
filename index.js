@@ -21,10 +21,7 @@ dotenv.config();
 app.use(express.json());
 
 app.use(urlencoded({extended:true}));
-if(process.env.NODE_ENV == "production"){
-    app.use(express.static(__dirname + "/public/images"));
-    
-}
+
 
 mongoose.connect(process.env.MONGO_URL)
 .then(() => {console.log("connected to the mongo database");})
@@ -42,13 +39,18 @@ app.use("/api/carts",cartRoute);
 app.use("/api/orders",orderRoute);
 app.use("/api/checkout",stripeRoute);
 
-app.use(express.static(path.join(__dirname,"/client/build")));
-app.use("*",(req,res) => {
+
+if(process.env.NODE_ENV == "production"){
+    app.use(express.static(__dirname + "/public/images"));
+    app.use(express.static(path.join(__dirname,"/client/build")));
+    // app.use("*",(req,res) => {
+    //     res.status(200).sendFile(path.join(__dirname,"/client/build",'index.html'))
+    // });
+    
+}
     // console.log(req.url);
     // console.log("rajat");
-    res.status(200).sendFile(path.join(__dirname,"/client/build",'index.html'))
     // res.status(200).send("welcome to home page");
-});
 
 app.listen(process.env.PORT || 3003,()=>{
     console.log(`server is listening on the port ${process.env.PORT}`);
