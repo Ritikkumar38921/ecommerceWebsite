@@ -53,5 +53,5 @@ if(process.env.NODE_ENV == "production"){
     // res.status(200).send("welcome to home page");
 
 app.listen(process.env.PORT || 3003,()=>{
-    console.log(`server is listening on the port ${process.env.PORT}`);
+    console.log(`server is listening on the ports ${process.env.PORT}`);
 });
